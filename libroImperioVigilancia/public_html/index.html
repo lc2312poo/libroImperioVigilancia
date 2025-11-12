@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>El Imperio de la Vigilancia: cuando la libertad se convierte en dato</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg-1: #f7f1ff;
+      --bg-2: #fff7f9;
+      --accent-1: #6d28d9;
+      --accent-2: #8b5cf6;
+      --accent-3: #06b6d4;
+      --muted: #6b7280;
+      --card-bg: rgba(255,255,255,0.9);
+      --radius: 14px;
+      --max-width: 980px;
+      --shadow-1: 0 6px 30px rgba(16,24,40,0.08);
+    }
+
+    @keyframes bgMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    html,body{
+      height:100%;
+      margin:0;
+      padding:0;
+      font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(90deg, var(--bg-1), #fffdf5, var(--bg-2));
+      background-size: 300% 300%;
+      animation: bgMove 18s ease infinite;
+      color: #111827;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    .container{ max-width: var(--max-width); margin: 36px auto; padding: 24px; }
+
+    header.site-header{
+      display:flex; align-items:center; justify-content:space-between; gap:16px;
+      background: linear-gradient(90deg, rgba(107,70,193,0.95), rgba(139,92,246,0.95));
+      color:white; padding:24px; border-radius: 16px; box-shadow: var(--shadow-1);
+    }
+
+    .brand{ display:flex; align-items:center; gap:14px; }
+    .logo{ width:64px; height:64px; border-radius:12px; background:linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+      display:flex; align-items:center; justify-content:center; font-weight:800; font-size:20px; color:#fff; }
+    .title h1{ margin:0; font-weight:800; font-size:20px; color:white; }
+    .title p{ margin:0; font-size:13px; color: rgba(255,255,255,0.9); }
+
+    nav.header-nav{ display:flex; gap:12px; align-items:center; }
+    .nav-btn{ background: rgba(255,255,255,0.12); color: #fff; padding:10px 14px; border-radius:10px;
+      text-decoration:none; font-weight:600; font-size:13px; transition: transform .18s ease, background .18s ease; }
+    .nav-btn:hover{ transform: translateY(-3px); background: rgba(255,255,255,0.18); }
+
+    .main-grid{ display:grid; grid-template-columns: 360px 1fr; gap:28px; margin-top:26px; }
+
+    .card-book{
+      background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(246,243,255,0.85));
+      border-radius: var(--radius); padding:18px; box-shadow: var(--shadow-1);
+      display:flex; flex-direction:column; gap:12px; align-items:center;
+    }
+
+    .book-figure{ width:100%; background: linear-gradient(135deg, #ffffff, rgba(229,231,235,0.8));
+      border-radius: 12px; padding:12px; display:flex; justify-content:center; align-items:center; }
+
+    .book-figure img{
+      width:100%; height:auto; border-radius:10px; max-width: 260px;
+      box-shadow: 0 10px 30px rgba(99,102,241,0.12);
+      transition: transform .35s ease, box-shadow .35s ease;
+    }
+    .book-figure img:hover{ transform: translateY(-6px) rotate(-0.5deg) scale(1.02);
+      box-shadow: 0 18px 40px rgba(99,102,241,0.18); }
+
+    .book-meta{ text-align:center; margin-top:6px; }
+    .book-meta h3{ margin:6px 0 2px 0; font-size:16px; color: #2b2b64; }
+    .book-meta p{ margin:0; font-size:13px; color:var(--muted); }
+
+    .book-actions{ display:flex; gap:10px; margin-top:12px; }
+    .btn{
+      padding:10px 14px; border-radius:10px; border:none; cursor:pointer; font-weight:700;
+      color:white; background: linear-gradient(90deg, var(--accent-2), var(--accent-1));
+      box-shadow: 0 8px 22px rgba(99,102,241,0.18); transition: transform .18s ease;
+    }
+    .btn.secondary{ background: linear-gradient(90deg, #06b6d4, #3dd9f2); color:#06202a; }
+    .btn:hover{ transform: translateY(-4px); }
+
+    .content{
+      background: var(--card-bg); border-radius: var(--radius); padding:28px;
+      box-shadow: var(--shadow-1); color:#0f172a;
+    }
+
+    .kicker{ display:inline-block; background:linear-gradient(90deg, rgba(139,92,246,0.12), rgba(99,102,241,0.08));
+      color: var(--accent-1); padding:8px 12px; border-radius:999px; font-weight:700; font-size:13px; margin-bottom:14px; }
+
+    .post-title{ font-size:26px; margin:6px 0 12px 0; color: #17143b; }
+    .meta{ color: var(--muted); font-size:13px; margin-bottom:20px; }
+    h2.sec{ font-size:20px; color:#2b136b; margin-top:22px; margin-bottom:8px; display:flex; align-items:center; gap:10px; }
+
+    p{ font-size:15px; color:#1f2937; text-align:justify; }
+    blockquote{ margin:18px 0; padding:18px; border-radius:10px;
+      background:linear-gradient(90deg,#eef2ff,#ecfeff); border-left:6px solid var(--accent-3); color:#034047; font-style:italic; }
+
+    ul.recs{ padding-left:18px; margin-top:12px; }
+    ul.recs li{ background:linear-gradient(90deg,#fff,#fbfbff); padding:12px 14px;
+      border-radius:10px; box-shadow: inset 0 -2px 6px rgba(0,0,0,0.02);
+      list-style:none; font-weight:600; color:#0f172a; margin-bottom:10px; }
+
+    .small-footer{ margin-top:18px; font-size:13px; color:var(--muted); text-align:center; }
+
+    .back-top{
+      position:fixed; right:22px; bottom:20px; background:linear-gradient(90deg,var(--accent-2),var(--accent-1));
+      color:white; padding:10px 12px; border-radius:999px; border:none; cursor:pointer;
+      box-shadow:0 12px 30px rgba(99,102,241,0.18); font-weight:700; transition:transform .16s ease;
+    }
+    .back-top:hover{ transform: translateY(-6px) scale(1.03); }
+
+    .modal{ position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+      background:rgba(2,6,23,0.45); z-index:300; }
+    .modal.active{ display:flex; }
+    .modal-card{ width:min(720px,92%); background:white; border-radius:12px;
+      padding:22px; box-shadow:0 30px 70px rgba(10,12,40,0.28); }
+    .modal-close{ float:right; background:transparent; border:0; font-size:18px; cursor:pointer; color:var(--muted); }
+
+    @media(max-width:980px){
+      .main-grid{ grid-template-columns:1fr; }
+      header.site-header{ flex-direction:column; align-items:flex-start; gap:12px; padding:18px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="brand">
+        <div class="logo">
+  <img src="https://www.pikpng.com/pngl/b/171-1710934_ip-cameras-image-logo-camaras-de-seguridad-png.png" alt="Logo del blog" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
+</div>
+
+        <div class="title">
+          <h1>El Imperio de la Vigilancia</h1>
+          <p>Por: Juliana Cárdenas</p>
+        </div>
+      </div>
+      <nav class="header-nav">
+        <a class="nav-btn" href="#intro">Inicio</a>
+        <a class="nav-btn" href="#cap1">Capítulos</a>
+        <a class="nav-btn" href="#recomendaciones">Recomendaciones</a>
+      </nav>
+    </header>
+
+    <div class="main-grid">
+      <aside class="card-book">
+        <div class="book-figure">
+          <img src="https://imagessl5.casadellibro.com/a/l/s7/25/9788494433825.webp"
+               alt="Portada de El imperio de la vigilancia (Ignacio Ramonet)" />
+        </div>
+        <div class="book-meta">
+          <h3>El imperio de la vigilancia</h3>
+          <p>Ignacio Ramonet — 2016</p>
+        </div>
+        <div class="book-actions">
+          <button class="btn" id="open-author">Ver más sobre el autor</button>
+          <a class="btn secondary" href="#recomendaciones">Leer recomendaciones</a>
+        </div>
+        <p class="small-footer">Portada © Clave Intelectual — usada con fines de reseña</p>
+      </aside>
+
+      <article class="content" id="intro">
+        <span class="kicker">Reseña & Análisis</span>
+        <h2 class="post-title">🌐 El Imperio de la Vigilancia: cuando la libertad se convierte en dato</h2>
+        <p class="meta">Por Juliana • Resumen y reflexión del libro de Ignacio Ramonet</p>
+
+        <h2 class="sec">👁️ Introducción: Vivimos vigilados, y casi no lo notamos</h2>
+        <p>¿Te has detenido a pensar cuánta información entregas al mundo cada vez que usas tu celular, redes sociales o correo electrónico? Ignacio Ramonet, en su libro <em>El imperio de la vigilancia</em>, nos revela que esa exposición constante no es casualidad: es parte de un sistema global que observa, analiza y controla cada aspecto de nuestra vida digital.</p>
+        <p>Ramonet plantea que ya no vivimos en democracias “libres”, sino en una era donde el poder se ejerce a través de los datos. Un nuevo imperio —silencioso y casi invisible— que se alimenta de nuestra propia actividad en línea.</p>
+
+        <h2 class="sec" id="cap1">🔥 Capítulo 1 – Terror y antiterror: el miedo que justifica el control</h2>
+        <p>Tras los atentados del 11 de septiembre de 2001, el mundo cambió para siempre. En nombre de la seguridad, países como Estados Unidos aprobaron leyes como la <strong>Patriot Act</strong>, que permitió detenciones sin juicio, espionaje masivo y torturas encubiertas.</p>
+        <p>Ramonet explica que el terrorismo se convirtió en una excusa perfecta para <strong>restringir libertades</strong>. El miedo pasó a ser la herramienta política más efectiva: cuando las personas sienten temor, aceptan la vigilancia sin protestar.</p>
+        <p>Europa siguió el mismo camino con leyes como la <strong>Renseignement (Francia, 2015)</strong>, legalizando el espionaje digital a los propios ciudadanos. Así nació lo que el autor llama <em>el imperio del miedo</em>, donde la seguridad se impone sobre la libertad.</p>
+        <blockquote>🧭 <strong>Idea clave:</strong> La democracia empezó a deteriorarse cuando el miedo reemplazó al diálogo como forma de control.</blockquote>
+
+        <h2 class="sec">😨 Capítulo 2 – La sociedad del miedo: el panóptico moderno</h2>
+        <p>En este capítulo, Ramonet profundiza en el efecto psicológico del miedo. Explica que vivimos dentro de un <strong>panóptico digital</strong>, una especie de prisión invisible donde basta con <em>creer</em> que nos observan para comportarnos como si realmente nos vigilaran.</p>
+        <p>El miedo —amplificado por los medios y los gobiernos— nos ha vuelto dóciles. Aceptamos que nos rastreen, nos graben y nos analicen, todo “por nuestra seguridad”.</p>
+        <blockquote>🧭 <strong>Idea clave:</strong> El miedo ya no solo paraliza, sino que <strong>domestica</strong>; nos convierte en ciudadanos obedientes y previsibles.</blockquote>
+
+        <h2 class="sec">🕵️‍♂️ Capítulo 3 – Edward Snowden: el hombre que reveló al Gran Hermano</h2>
+        <p>En 2013, <strong>Edward Snowden</strong>, exanalista de la CIA y la NSA, filtró documentos que demostraban la existencia de una <strong>vigilancia masiva global</strong>.</p>
+        <p>El programa <strong>PRISM</strong> permitía a la NSA acceder directamente a los servidores de gigantes tecnológicos como Google, Facebook, Apple o Microsoft, espiando correos, llamadas, fotos y mensajes de millones de personas.</p>
+        <p>Ramonet describe a la NSA como la <strong>agencia más poderosa del mundo</strong>, con más de <strong>100.000 empleados</strong> y un presupuesto superior al de la CIA. Incluso los aliados de EE. UU. eran espiados: líderes como Angela Merkel o François Hollande fueron vigilados sin su consentimiento.</p>
+        <blockquote>🧭 <strong>Idea clave:</strong> Snowden mostró que la privacidad ya no es un derecho, sino un recuerdo.</blockquote>
+
+        <h2 class="sec">💻 Capítulo 4 – El complejo securitario-digital: cuando los datos son el nuevo oro</h2>
+        <p>Ramonet advierte que la vigilancia no solo proviene del Estado, sino también del <strong>mercado</strong>. Las grandes corporaciones tecnológicas —Google, Facebook, Amazon— recopilan información sobre nosotros para venderla o usarla con fines comerciales y políticos.</p>
+        <p>Nace así lo que el autor llama el <strong>“complejo securitario-digital”</strong>, una alianza entre empresas y gobiernos que convierte los datos personales en el recurso más valioso del siglo XXI.</p>
+        <blockquote>🧭 <strong>Idea clave:</strong> Nuestros clics, gustos y hábitos ya no nos pertenecen: son el producto que alimenta la economía de la vigilancia.</blockquote>
+
+        <h2 class="sec">📚 Conclusión: recuperar la libertad en tiempos de control</h2>
+        <p><em>El imperio de la vigilancia</em> es más que un libro; es una alerta. Ramonet nos invita a reflexionar sobre cómo la tecnología, el miedo y la comodidad han permitido que cedamos, poco a poco, nuestra libertad.</p>
+        <p>Vivimos en un mundo donde todo se registra, todo se analiza y todo puede usarse en nuestra contra. Pero también en uno donde la conciencia crítica puede marcar la diferencia.</p>
+        <blockquote>🧭 <strong>Mensaje final:</strong> “El futuro de la libertad no depende de los gobiernos, sino de nuestra capacidad para exigir transparencia y proteger nuestra privacidad.”</blockquote>
+
+        <h2 class="sec" id="recomendaciones">💬 Recomendaciones para los lectores</h2>
+        <ul class="recs">
+          <li><strong>Piensa antes de aceptar términos y condiciones.</strong> Cada clic deja una huella.</li>
+          <li><strong>Cuestiona lo que consumes y compartes.</strong> La información es poder y tu privacidad vale más de lo que imaginas.</li>
+          <li><strong>Infórmate y participa.</strong> La vigilancia se combate con conocimiento y ciudadanía activa.</li>
+        </ul>
+      </article>
+    </div>
+
+    <footer style="margin-top:28px; text-align:center;">
+      <p style="margin:0; color:var(--muted); font-size:13px;">© 2025 Blog de Juliana | Inspirado en <em>El Imperio de la Vigilancia</em> de Ignacio Ramonet</p>
+    </footer>
+  </div>
+
+  <button class="back-top" id="backTop" aria-label="Volver arriba">↑</button>
+
+  <!-- Modal con imagen del autor -->
+  <div class="modal" id="authorModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-card">
+      <button class="modal-close" id="closeModal" aria-label="Cerrar">✕</button>
+      <div style="display:flex; gap:18px; align-items:flex-start; flex-wrap:wrap;">
+        <img src="https://www.humanite.fr/wp-content/uploads/2016/01/39944.HR_.jpg"
+             alt="Ignacio Ramonet"
+             style="width:140px; height:auto; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.12);" />
+        <div style="flex:1; min-width:200px;">
+          <h3 style="margin-top:0; color:var(--accent-1)">Ignacio Ramonet — Breve ficha</h3>
+          <p style="color:#374151; font-size:15px;">
+            Ignacio Ramonet (n. 5 de mayo de 1943, Redondela, Galicia) es periodista, sociólogo y profesor de Teoría de la Comunicación. Fue director de <em>Le Monde Diplomatique</em> entre 1991 y 2008.
+          </p>
+          <p style="color:var(--muted); font-size:13px;">
+            Autor de obras como <em>El imperio de la vigilancia</em>, <em>La tiranía de la comunicación</em> y <em>Guerras del siglo XXI</em>, reflexiona sobre el poder mediático, la globalización y la manipulación informativa.
+          </p>
+        </div>
+      </div>
+      <div style="display:flex; gap:12px; justify-content:flex-end; margin-top:22px;">
+        <a class="btn" href="https://es.wikipedia.org/wiki/Ignacio_Ramonet" target="_blank">Ver bibliografía</a>
+        <button class="btn secondary" id="modalClose2">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('authorModal');
+    const open = document.getElementById('open-author');
+    const close1 = document.getElementById('closeModal');
+    const close2 = document.getElementById('modalClose2');
+    open.onclick = ()=> modal.classList.add('active');
+    close1.onclick = close2.onclick = ()=> modal.classList.remove('active');
+    window.onclick = e=>{ if(e.target === modal) modal.classList.remove('active'); };
+    const topBtn = document.getElementById('backTop');
+    topBtn.onclick = ()=> window.scrollTo({top:0,behavior:'smooth'});
+  </script>
+
+</body>
+</html>
